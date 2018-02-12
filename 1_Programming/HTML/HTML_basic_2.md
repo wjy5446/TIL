@@ -26,16 +26,16 @@
 <table>
 	<thead>
 		<tr>
-			<th> </th>
-			<th> </th>
-			<th> </th>
+			<td> </td>
+			<td> </td>
+			<td> </td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<th> </th>
-			<th> </th>
-			<th> </th>
+			<td> </td>
+			<td> </td>
+			<td> </td>
 		</tr>
 	</tbody>
 </table>
