@@ -31,6 +31,10 @@ CSS : 디자인에 집중
 
 `#id_name{color:red;}`
 
+- 속성 선택자 
+
+`[att = value]`
+
 
 
 ### 여러가지 선택자
@@ -73,3 +77,10 @@ CSS : 디자인에 집중
 - text-decoration:underline : 밑줄
 - border:1px solid red : 테두리
 - background-color : 배경화면
+
+
+
+## 선택자 사용 tip
+
+- id가 있을 시에는 id를 사용하는 게 좋다.
+- 선택할 시에는 html 구조를 먼저 이해해야 된다.

@@ -19,7 +19,7 @@
   - Central tendency - Mean(평균), Median(중앙값), Mode(최빈값)
   - Spread - variance(분산), standard deviation(표준 편차)
   - skewness, kurtosis
-  -  시각화 : histogram, box plot이용
+  - 시각화 : histogram, box plot이용
 - Categorical Variable
   - Count, ratio
   - 시각화 : bar plot, pie plot 
@@ -49,9 +49,9 @@
   - hashing procedures를 이용해 추출
 - Data Collection : 데이터를 수집하는 과정에서 생기는 오류 
   -  Missing completely at random : 누락 가능성이 동등한 경우
-  - Missing at random : 누락되는 비율이 다른 경우 
-  - Missing that depend on unobserved predictors 
-  - Mssing that depends on the missing value itself
+  -  Missing at random : 누락되는 비율이 다른 경우 
+  -  Missing that depend on unobserved predictors 
+  -  Mssing that depends on the missing value itself
 
 ### Missing Value 처리 방법
 
@@ -139,10 +139,10 @@ feature를 변경하거나 새롭게 추가해 모델링하는 방법
 
 ### Variable transformation
 
-- 데이터를 모델링하는 과정에서 함수를 통해 변수를 변형하는 과정(square, cube root, lagarithm)
+- 데이터를 모델링하는 과정에서 함수를 통해 변수를 변형하는 과정(square, cube root, logarithm)
   - non linear -> linear로 변경할 때 사용(logarithm)
   - skewed dist -> symmetric dist로 변경할 때 사용(logarithm)
-  - categorizing을 통해 binninb
+  - categorizing을 통해 binning
 
 
 
