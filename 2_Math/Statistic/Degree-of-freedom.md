@@ -50,6 +50,30 @@
 
 
 
+##### 1-sample t test에서 자유도
+
+t test에서 모수는 ($\sigma, \mu, N-1$)
+
+자유도 N-1이 된다. 왜냐하면 $\sigma, \mu$가 정해져 있기 때문이다.
+
+
+
+##### Chi-square Test에서 자유도
+
+marginal를 이용해 two-way table를 만들 때, 필요한 데이터의 수를 자유도로 지정.
+
+자유도는 (row - 1)(column - 1) 이 된다.
+
+|        | A    | B    | Total |
+| ------ | ---- | ---- | ----- |
+| Male   | ?    |      | 6     |
+| Female |      |      | 15    |
+|        | 10   | 11   | 21    |
+
+
+
+
+
 첨부사이트
 
 [http://dermabae.tistory.com/144](http://dermabae.tistory.com/144)
