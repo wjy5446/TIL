@@ -7,7 +7,7 @@
 ### 검정 목적
 
 1. 독립성 검정(Testing Independence) : 두 변수가 서로 독립인 검정
-2. 적합성 검정(goodness of git test) 
+2. 적합성 검정(goodness of fit test) 
    - 관측 데이터가 예측한 분포를 따르는 지 검정
 3. 동일성 검정 : 두 집단의 분포가 동일한가?
 
@@ -63,3 +63,4 @@ $$
 
 - $DF = (row - 1)(column - 1)$
 - 변수간에 연관이 없다면 같은 분포를 보인다.
+
