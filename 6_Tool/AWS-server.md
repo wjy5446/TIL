@@ -83,6 +83,35 @@
 
 
 
+
+##### crontab error 확인
+
+- `grep CRON /var/log/syslog` : syslog안에 있는 CRON 메세지 에러 확인 
+- 에러가 발생할 시 MTA(mail transport agency)를 이용해 확인 할 수 있다.
+
+
+
+##### MTA
+
+- `sudo apt-get install postfix` : MTA 설치
+- `sudo apt install mailutils` : MTA를 좀 더 쉽게 하기 위한 패키지
+  - `mail` : 메일 리스트 확인
+  - `숫자` : 해당 메일 확인
+  - `delete *'` : 전체 메일 삭제
+  - `q` : quit 나가기
+
+
+
+##### crontab 환경 설정
+
+- 보통 환경이 실행될 때에는 bash_profile이 실행되고 설정된다. 
+- 하지만 crontab의 경우, bash_profile이 실행되지 않는다. 그러므로 직접 pyenv의 경로에 있는 파이썬을 실행하여 환경을 실행해 준다.
+
+
+-`cd .pyenv/versions/3.6.4/bin/pthon3` : pyenv파일에 있는 경로를 직접 실행하여 설정해준다.
+
+
+
 ### phantomJS와 xvfb
 
 window가 없는 환경에서 selenuim을 가능하게 해주는 패키지
@@ -106,3 +135,26 @@ display.start()
 driver.quit()
 ```
 
+
+
+### 작은 팁
+
+- timezone 설정
+
+  - `tzselect` 
+
+  - .bash_profile에 아래 코드 실행
+
+    >TZ = 'Asia/Seoul'
+    >
+    >export TZ
+
+    `source .bash_profile`
+
+  - `date`로 확인
+
+  ​
+
+- vim enconding 설정
+
+  - .vimrc에  `set encoding='utf-8' `

@@ -11,5 +11,5 @@
 
 ### .bashrc와 .bash_profile
 
-- `.bashrc` : 이미 로그인 상태에서 새 터미널 실행시 (non-login shell)
-- `.bash_profile` : 시스템 로그인 할 때 실행 (login shell)
+- `.bashrc` : 이미 로그인 상태에서 새 터미널 실행시 (non-login shell) (Session 단계)
+- `.bash_profile` : 시스템 로그인 할 때 실행 (login shell) (Login 단계)
