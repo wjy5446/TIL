@@ -40,13 +40,14 @@
 
 
 
-- `vi /etc/elasticsearch`
+- `vi /etc/elasticsearch/elasticsearch.yml`
   - `newwork.host : "localhost"`
   - `http.port : 9200`
 - `vi /etc/default/elasticsearch `
-  - `START_DAEMON : True`
+  - `START_DAEMON = True`
+- `vi /etc/elasticsearch/jvm.optuins` : heap size 문제 일시
 
-
+  - `-Xms512m, -Xmx512m` 로 변경
 
 
 ### 5. START & STOP & CHECK
@@ -57,3 +58,8 @@
 - `curl -XGET 'localhost:9200'` : check run
 
 
+
+
+### 6. Trouble Shooting
+
+- 5.0 -> 6.0 update시 문제 : https://discuss.elastic.co/t/elasticsearch-service-wont-start-after-full-cluster-upgrade-from-5-4-to-6-0/108048/5
