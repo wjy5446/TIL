@@ -1,3 +1,15 @@
+## 6.2 Gradient-Based Learning
+
+### 6.2.1 Cost Functions
+
+$$
+J(\theta)=-E_{x, y\tilt \hat{p}_{data}}\log p_{model}(y | x)
+$$
+
+
+
+
+
 ##  6.3 Hidden Units
 
 - 보통 ReLu 사용, 하지만 다양한 Hidden Unit이 존재
@@ -29,7 +41,7 @@ $$h_i=g(z, \alpha)_i=max(0, z_i)+\alpha_imin(0. z_i)$$
 
 
 
-#### 2) Max unit
+#### 2) Maxout unit
 
 $$
 g(z)_i = max_{j \in G} z_j
@@ -37,6 +49,11 @@ $$
 
 - z를 그룹으로 나누고 그룹안에서 최고 값을 선택한다.
 - 적은 파라미터를 사용해 계산적, 통계적 이점을 가짐.
+- maxout을 이용하면 general한 ReLu를 만들 수 있음.
+
+
+
+
 
 
 
@@ -128,7 +145,7 @@ $$
   - CNN, RNN
   - Skip connections : i layer와 (i+2) layer를 연결하는 구조
     - 이유 :  gradient가 output layer에서 input layer까지 더 쉽게 흐르게 만든다.
--  두 layer를 연결하는 방법
+- 두 layer를 연결하는 방법
   - input가 output을 전체를 연결하는 것이 아니라, 부분만 연결
     - 이유 : parameter의 수,  계산 속도 줄임
     - 문제에 의존적임
@@ -187,5 +204,23 @@ $$
 
 
 
+#### 6.5.3 Recursively Applying the Chain Rule to Obtain Backprop
 
+#### 6.5.4 Back-Propagation Computation in Fully-Connected MLP
+
+#### 6.5.5 Symbol-to-Symbol Derivatives
+
+#### 6.5.6 General Back-Propagation
+
+- dz/dz = 1에서 시작하여, 현재 계산된 gradient를 곱해 가면서 계산.
+- back-propagation시 한 노드에 만나게 될 시, 합으로 계산.
+
+##### 여러 subroutine : 
+
+- get_operation(V) : V를 계산하는 operation을 return하는 함수
+- get_consumers(V, g) : V의 자식을 return 하는 함수
+- get_inputs(V, g) : V의 부모를 return 하는 함수
+- bprop : jacovian-vector의 곱
+  - 각 op는 bprop하는 법을 가지고 있다. 
+- ​
 
