@@ -1,4 +1,4 @@
-# 8.4 parameter Initialization Strategies
+## 8.4 parameter Initialization Strategies
 
 - Deep learning은 initial point 선택에 크게 영향을 받음.
 
@@ -84,4 +84,36 @@
 
   
 
-   
+## 8.5 Algorithms with Adaptive Learning Rates
+
+- parameter마다 다른 learning rate 적용, 자동적으로 adaptive한 learning rate 적용
+- **delta-bar-delta algorithm**
+  - 기본적인 방법
+  - idea : loss의 편미분의 부호가 동일하면 learning_rate 증가, 부호가 변하면 learning_rate 감소
+  - Full batch optimization일 때 가능  
+
+
+
+### 8.5.1 AdaGrad
+
+- 방법 : **지금까지의 loss의 제곱합의 제곱근에 반비례해서** learning_rates를 각 parameter에 adaptive하게 적용.
+- 실험적으로, 학습 초기의 그래디언트 제곱합은 조기 과다 감소될 수 있다.
+- 부분적인 deep learning에서 동작.
+
+
+
+### 8.5.2 RMSProp
+
+- 방법 : AdaGrad에서 gradient accumulation을 **exponentially weighted moving average**로 변경
+  - exponentially weighted moving averate : $\rho r+(1-\rho)g$
+- AdaGrad의 문제 : convex에서 잘동작하지만, 모든 gradient를 적용하여 learning rate가 convex 구조에 도착하기 전에 매우 작아짐.
+- non-convex에서 convex 구조까지 빠르게 수렴
+- 마치, AdaGrad를 convex에 초기화하는 것과 같음.
+- parameter : $\rho$ : moving average length
+
+
+
+### 8.5.3 Adam
+
+- Adaptive moments
+
