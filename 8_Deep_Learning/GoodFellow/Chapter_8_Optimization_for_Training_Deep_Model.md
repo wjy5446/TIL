@@ -115,5 +115,22 @@
 
 ### 8.5.3 Adam
 
-- Adaptive moments
+- Adaptive moments의 준말
+- RMSProp + momentum(조금은 다른 개념인)
+- 1차 momentum  :$s=\rho s+(1-\rho)g$, 2차 momentum : $r=\rho r+(1-\rho)g^2$ 
+- $s=s/1-\rho, r=r/1-\rho$
+- $\theta=\theta-\epsilon \frac{s}{\sqrt{r}+\sigma}$
+- Momentum in Adam
+  - gradient에 1차 momentum 값이 측정으로 더해짐, 
+    - 이론적 이유는 없음
+  - 1차, 2차moment은 s와 r의 bias을 corrections하는 데 사용 
+- hyperparameter의 선택에 robust함
+- parameter : $\rho_1, \rho_2$ 일반적으로 0.9 or 0.99, $\epsilon$ : 0.001
 
+
+
+## 8.5.4 Right Optimization Algorithm
+
+- 적합한 방법을 찾는 방법은 없음
+- 하지만, adaptive learning rate 모델 (RMSProp, AdaDelta)가 좋은 성능을 보임.
+- learning rate의 선택은 유저의 친숙도에 달려 있음 (parameter tuning이 쉬운 것)
