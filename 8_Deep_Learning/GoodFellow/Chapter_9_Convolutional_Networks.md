@@ -106,3 +106,67 @@ $$
 
 
 - 마지막으로, 몇몇 종류의 data는 fixed-shape matrix의 곱으로 학습하지 못한다. 하지만 Convolution는 이를 가능하게 해준다. 
+
+
+
+## 9.3 Pooling Layer
+
+- convolution layer의 3단계
+  - 1  단계 : convolution
+  - 2 단계 : non-linear activation function (**detector**)
+  - 3 단계 : pooling function
+- 종류
+  - max pooling : 사각 영역 내 최대 값 출력
+  - average of a rectangular neighborhood
+  - L2 norm of a rectangular neighborhood
+  - weighted average based on the distance from the central pixel.
+- pooling의 특징
+  - 작은 이동에도 invariant 함.
+  - 예를 들어, 얼굴을 찾을 때, 눈의 정확한 위치가 아니라, 눈의 대략적인 존재여부를 파악할 때 유의미하다.
+  - pooling은 작은 이동에도 invariant해야 된다는 prior가 적용되는 것
+  - max pooling시 어느 transformation에서 나왔는지 학습할 수 있다. 
+  - detector unit보다 적은 수의 pooling unit 사용, (input 정보 정리)
+    - computational efficiency 향상 시킴
+- 변하기 쉬운 image를 다루는 데에 pooling은 필수적
+  - pooling region에 offset를 변화시켜서 고정된 features size를 생성
+- autoencoder, boltzman machine의 경우, pooling은 네트워크를 복잡하게 한다.
+
+
+
+- 실제 convNet은 간단한 구조가 아니라, 많은 branch를 가지고 있다. 
+- 1000 classifier convolution 구조의 종류
+  - convolution, pooling을 거친 후, flattening한후 fully-connective layer 지남.
+  - variable-pooling layer를 거친 후, fully-connective layer 지남.
+  - conv, pooling을 거친 후, fc 대신에 conv를 이용해 클래스당 feature맵을 생성한 뒤, avg pooling 사용
+
+
+
+## 9.4 Convolution and Pooling as an Infinitely Strong Prior
+
+- prior probability distribution : 데이터를 보기 전에, 신뢰성을 encode한 모델의 파라미터 분포
+- weak prior : 높은 variance를 가진 가우시안 분포 (높은 엔트로피)
+- strong prior : 낮은 variance를 가진 가우시안 분포, 
+  - 이럴경우, 파라미터 결과에 중요한 역활
+- infinitely strong prior : 몇몇 파라미터에 zero probability를 가진 것.
+  - 이런 경우, 그 파라미터 값은 절대로 금지 됨.
+
+
+
+- convolution의 사용은 infinitely strong prior로 간주.
+  - 오직 local interaction, equivariant to translation
+- pooling의 경우도 small translation에 대한 invariant
+
+
+
+- fully connective layer로 convolution net를 사용하는 건 매우 메모리적 낭비
+  - 하지만 convolution이 어떻게 동작하는 지 알려줌.
+
+
+
+- two insight
+  - 첫번 째 인사이트 : pooling, convolution은 underfitting이 발생할 수 있음
+    - prior가 합리적으로 정확할 때, pooling과 convolution이 잘 동작
+    - 정확한 위치를 알아낼 때, Pooling을 사용하는 건 별로 좋지 않음
+    - 또는, 멀리 떨어진 위치의 통합된 정보를 이용할 때에는 convolution이 부적절
+  - 두번째 인사이트 : 확률적 학습 성능을 convolutional model끼리만 비교해야 한다.
+    - 많은 이미지 데이터는 permutation invariant하고 학습을 통해 concept을 발견하는 모델과 디자이너에 의해 하드코딩된 공간적 지식을 가진 모델을 위한 별도의 benchmarks가 존재한다.??
