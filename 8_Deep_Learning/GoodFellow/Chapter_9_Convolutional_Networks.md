@@ -152,9 +152,10 @@ $$
 
 
 
-- convolution의 사용은 infinitely strong prior로 간주.
-  - 오직 local interaction, equivariant to translation
-- pooling의 경우도 small translation에 대한 invariant
+- convolution을 infinitely strong prior를 가진 FC로 생성할 수 있다. 
+  - convolution의 사용은 infinitely strong prior로 간주.
+    - 오직 local interaction, equivariant to translation
+  - pooling의 경우도 small translation에 대한 invariant
 
 
 
@@ -170,3 +171,63 @@ $$
     - 또는, 멀리 떨어진 위치의 통합된 정보를 이용할 때에는 convolution이 부적절
   - 두번째 인사이트 : 확률적 학습 성능을 convolutional model끼리만 비교해야 한다.
     - 많은 이미지 데이터는 permutation invariant하고 학습을 통해 concept을 발견하는 모델과 디자이너에 의해 하드코딩된 공간적 지식을 가진 모델을 위한 별도의 benchmarks가 존재한다.??
+
+
+
+## 9.5 Variants of the Basic Convolution Function
+
+- neural network에서는 수학적인 convolution을 사용하지 않는다. 
+
+
+
+- 실제 neural network의 convolution은 평행한 convolution application의 조합을 의미한다. 
+  - 하나의 convolution은 하나의 feature만 추출, 하지만 우리는 다양한 위치의 많은 feature을 뽑기 원한다
+- 실제로 multi-channnel convolution은 교환법칙이 성립하지 않음. 오직 input channel과 같은 output channel을 가질 때 동작.
+
+
+
+- **convolution equation**
+
+$$
+Z_{i,j,k}=\sum V_{;,j+m-1,k+n-1}K_{i,l,m,n}
+$$
+
+- Z : output, (i : input channel, j : row, k :columns)
+- V : input, (i : input channel, j : row, k : column)
+- K : kernel, (i :output channel, j : input channel, k : row, l : columns) 
+
+
+
+- **downsampled convolution**
+
+  - stride를 증가시킨 convoltion
+  - downsampling 효과 있음
+  - 방향마다 다른 stride 적용가능
+
+  
+
+- **zero padding**
+
+  - output을 만들기 위해 input에 zero-padding
+  - 없다면, kernel 크기와 network의 깊이를 사이를 골라야 한다.
+  - 종류
+    - Valid convolution
+      - no zero-padding
+      - output의 크기가 줄어든다, deep하게 만드는 데 한계가 있음.
+      - w(input width), k(kernel) -> m-k+1, kernel size의 크기가 커지면, 급격히 줄어듬
+    - Same convolution
+      - 같은 size를 만들기 위해서 zero-padding
+      - 많은 layer 생성가능
+      - 하지만, border에 있는 pixel은 적은 영향을 준다.
+    - full convolution
+      - kernel안에 하나의 픽셀이라도 있으면 zero-padding
+      - m+k-1 output size
+    - 적당한 값은 valid와 same 사이이다.
+
+
+
+- unshared convolution
+  - local에 따라 parameter를 공유하지 않은 convolution
+  - locally connected layers
+  - 각 feature가 작은 space의 함수로 이루어져있다는 사실을 알고 있을 때 가능.
+  - 예를 들어, 얼굴 여부를 판단할 때, 입이 특정 위치에 존재하는 알 경우.
