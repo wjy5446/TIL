@@ -231,3 +231,49 @@ $$
   - locally connected layers
   - 각 feature가 작은 space의 함수로 이루어져있다는 사실을 알고 있을 때 가능.
   - 예를 들어, 얼굴 여부를 판단할 때, 입이 특정 위치에 존재하는 알 경우.
+- 제한된 연결
+  - 각 channel 끼리 연결
+  - hidden layer의 감소 없이, memory 효율성을 가짐.
+
+- Tiled convolution 
+  - convolution + connected layer
+  - kernel set이 돌아가면서 학습.
+  - kernel이 rotate하기 전까지는 connected layer와 같음, 하지만 kernel이 rotate하면 convolution가 비슷하게 동작
+  - convolution보다 메모리 효율은 떨어짐
+- locally connected layer와 tiled convolutional layer은 max-pooling과 흥미로운 상호작용을 한다.
+  - locally connvected layer와 tiled convolution은 다른 filter을 사용해 서로 다른 transform을 학습. 그리고 max-pool은 학습된 transform에 invariant
+
+
+
+- convolution의 gradient 
+  - convolution을 sparse하고 몇몇부분만 존재하는 matrix 곱(linear operation)로 생각하면, gradient를 유도하는 데 도움이 된다.
+
+  - 이런 작업은 hidden unit을 visiable unit을 구성하는 데 도움이 된다. ??
+
+  - Three operation - convolution, backprop(out->wieght), backprop(out->in)만 있으면, 모든 gradient를 구할 수 있음/
+
+  - 예)
+
+    - K : kernel, V : multi-image, s : stride, Z : output
+
+    - G : gradient d/dZ J(V, K) , back-prop동안 저장해둔다.
+      $$
+      g(G,V,s)=\dfrac{\part}{\part K}J(V,K)=\sum G_{i, m,n}V_{j, (m-1)s+k, (n-1)s+l}
+      $$
+
+      - kernel의 gradient
+
+      $$
+      h(K,G,s)=\dfrac{\part}{\part V}J(V,K)=\sum \sum \sum K_{q,i,m,p}G_{q,l,n}
+      $$
+
+      - input의 gradient
+
+
+
+- bias
+  - 보통 convolution은 bias term을 사용한다.
+    - locally connect layer : 각 unit이 bias를 가짐
+    - tiled convolution : 같은 tile에서 같은 bias 가짐
+    - convolution : 채널당 하나의 bias 사용
+    - input을 알 경우에는, 위치당 bias 사용이 가능 -> 정확하게 수정가능
