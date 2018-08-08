@@ -284,3 +284,40 @@ $$
     - tiled convolution : 같은 tile에서 같은 bias 가짐
     - convolution : 채널당 하나의 bias 사용
     - input을 알 경우에는, 위치당 bias 사용이 가능 -> 정확하게 수정가능
+
+
+
+## 9.6 Structured Output
+
+- CNN은 output이 high dimensional
+  - output $S_{i,j,k}$ 일 때, pixel (j,k)에 대해서 i class probability 가능
+  - 이는 개별적인 물체의 위치를 알 수 있음.
+  - spatial reduction을 피하기 위한 방법
+    - pooling 쓰지 않음
+    - lower-resolution grid of labels 사용
+    - image label을 추측하고 이를 주위 픽셀로 추측한다. convolution 마다.. (reccurent convolution network)
+  - image segmentation에 사용
+    -   연속된 pixel 은 같은 label을 가질 확률이 높다는 가정으로 graphic model 이용
+    - 대안 적으로 convolution 을 graphical model의 가정을 최대하기 위해서 학습
+
+
+
+## 9.7 Data Type
+
+- 다양한 data type이 존재.
+  - 1 D 
+    - (single) : audio waveforom, 
+    - (multi) : skeleton animation : joint angle로 표시
+  - 2 D
+    - (single) Audio data Fourier transform (frequencies, magnitue)
+    - (multi) Color image
+  - 3D 
+    - (single) Volumetric data
+    - (multi) Color Video data (time, height, width, RGB)
+
+
+
+- input의 사이즈가 여러 가지 일 때,
+  - pixel당 label을 정할 때는 상관 없음
+  - 하지만 전체 이미지에 label을 정할 때는 고정된 pooled output을 사용
+    - 이를 위해 size에 따라 pooling region 크기를 변화를 주어야 한다.
