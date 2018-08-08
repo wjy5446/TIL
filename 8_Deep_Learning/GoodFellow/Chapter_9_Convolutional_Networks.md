@@ -121,11 +121,11 @@ $$
   - L2 norm of a rectangular neighborhood
   - weighted average based on the distance from the central pixel.
 - pooling의 특징
-  - 작은 이동에도 invariant 함.
-  - 예를 들어, 얼굴을 찾을 때, 눈의 정확한 위치가 아니라, 눈의 대략적인 존재여부를 파악할 때 유의미하다.
+  - 작은 이동에도 **invariant** 함.
+  - 예를 들어, 얼굴을 찾을 때, 눈의 정확한 위치가 아니라, **눈의 대략적인 존재여부**를 파악할 때 유의미하다.
   - pooling은 작은 이동에도 invariant해야 된다는 prior가 적용되는 것
   - max pooling시 어느 transformation에서 나왔는지 학습할 수 있다. 
-  - detector unit보다 적은 수의 pooling unit 사용, (input 정보 정리)
+  - detector unit보다 적은 수의 pooling unit 사용, (**input 정보 정리**)
     - computational efficiency 향상 시킴
 - 변하기 쉬운 image를 다루는 데에 pooling은 필수적
   - pooling region에 offset를 변화시켜서 고정된 features size를 생성
@@ -171,8 +171,7 @@ $$
     - 또는, 멀리 떨어진 위치의 통합된 정보를 이용할 때에는 convolution이 부적절
   - 두번째 인사이트 : 확률적 학습 성능을 convolutional model끼리만 비교해야 한다.
     - 많은 이미지 데이터는 permutation invariant하고 학습을 통해 concept을 발견하는 모델과 디자이너에 의해 하드코딩된 공간적 지식을 가진 모델을 위한 별도의 benchmarks가 존재한다.??
-
-
+  - fc의 경우에는 위치정보의 손실이 발생한다. 그 이유는 fc은 node가 permutation되면, 결과과 같기 때문이다. 그렇기 때문에 1x1을 사용해서 global average pooling(GAP) 을 사용한다.
 
 ## 9.5 Variants of the Basic Convolution Function
 
@@ -203,6 +202,7 @@ $$
   - stride를 증가시킨 convoltion
   - downsampling 효과 있음
   - 방향마다 다른 stride 적용가능
+  - downsamled convolution과 (convolution+downsampled)
 
   
 
@@ -231,15 +231,22 @@ $$
   - locally connected layers
   - 각 feature가 작은 space의 함수로 이루어져있다는 사실을 알고 있을 때 가능.
   - 예를 들어, 얼굴 여부를 판단할 때, 입이 특정 위치에 존재하는 알 경우.
+
 - 제한된 연결
   - 각 channel 끼리 연결
   - hidden layer의 감소 없이, memory 효율성을 가짐.
+
+
+
 
 - Tiled convolution 
   - convolution + connected layer
   - kernel set이 돌아가면서 학습.
   - kernel이 rotate하기 전까지는 connected layer와 같음, 하지만 kernel이 rotate하면 convolution가 비슷하게 동작
   - convolution보다 메모리 효율은 떨어짐
+
+
+
 - locally connected layer와 tiled convolutional layer은 max-pooling과 흥미로운 상호작용을 한다.
   - locally connvected layer와 tiled convolution은 다른 filter을 사용해 서로 다른 transform을 학습. 그리고 max-pool은 학습된 transform에 invariant
 
@@ -261,13 +268,13 @@ $$
       g(G,V,s)=\dfrac{\part}{\part K}J(V,K)=\sum G_{i, m,n}V_{j, (m-1)s+k, (n-1)s+l}
       $$
 
-      - kernel의 gradient
+      - kernel의 gradient : gradient와 해당 인풋들의 convolution
 
       $$
       h(K,G,s)=\dfrac{\part}{\part V}J(V,K)=\sum \sum \sum K_{q,i,m,p}G_{q,l,n}
       $$
 
-      - input의 gradient
+      - input의 gradient : gradient와 transpose된 kernel의 convolution으로 이루어져 있음/
 
 
 
