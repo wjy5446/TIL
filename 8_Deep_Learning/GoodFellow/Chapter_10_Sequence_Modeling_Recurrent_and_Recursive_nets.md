@@ -74,7 +74,7 @@ $$
 
 2) time step마다 output 생성, output으로 hidden으로 입력
 
-- 덜 파워풀하다. (output의 고차원이고 풍부하지 않는다면)
+- 덜 파워풀하다. (output의 고차원이지 않고 풍부하지 않는다면)
 - hidden이 간접적으로 연결
 - 독립적으로 훈련되기 때문에 학습속도가 빠르다. (parallelization)
 
@@ -254,7 +254,7 @@ $$
 
 - encoder : input sequence를 처리하여 context 생성
 - decoder : context를 받아 output sequence를 사용
-- $logP(y1,y2, yn|x1, x2,xn)$를 최대하도록 학습
+- $logP(y1,y2, yn|x1, x2,xn)​$를 최대하도록 학습
 
 
 
@@ -264,3 +264,75 @@ $$
 
 
 - **Attention mechanism** : output 요소와 context 요소를 합쳐서 학습
+
+
+
+## 10.5. Deep Recurrent Networks
+
+- 3가지 parameter blocks
+  - input -> hidden
+  - previous hidden -> next hidden
+  - hidden -> output
+- 이런 과정은 affine transformation으로 표시 (shallow depth)
+
+
+
+- deep depth
+
+  - deep할수록 mapping이 충분히 가능
+
+  
+
+- deep 하게 만드는 방법
+
+  -  계층적으로 나누어서 recurrent
+    - 낮은 계층은 input을 좀더 higher level로 생성
+  - input-hidden, hidden-hidden, hidden-output 사이에 mlp와 같은 구조를 만든다.
+    - capacity를 잘 고려하여 쌓는다. 많이 쌓는다면, 학습이 어려워 진다.
+  - skip-connection을 연결하여 path-lenghening effect줄인다.
+
+
+
+## 10.6. Recursive Neural Networks
+
+- Recursive neural networks는 "deep tree"로써 만들어진 graph로 생성이 가능하다.
+- Recursive neural network의 장점
+  - 같은 length $\tau$에 대해서, depth를 급격히 줄일 수 있다.
+  - long-term dependencies에 대해서 좋다.
+- Recursive neural network를 쌓는 방법
+  - data에 의존적인 않는 구조 사용. (balanced binary tree)
+  - domain을 이용해 적절한 tree 구조 사용가능
+    - 예를 들어, parse tree 구조 사용
+  - 각 노드의 computation은 전통적인 neural net 이외의 것이 사용
+
+
+
+## 10.7 The Challendge of Long-Term Dependencies
+
+- Long-Term Dependencies의 문제점 
+  - back-prop시 vanish(대부분) or explode(흔하지 않음, 하지만 치명적)
+  - RNN의 안정화된 경우에도 long_Term dependencies 어려움은 발생
+
+
+
+- In detail,
+  - deep해질수록, nonlinear behavior해진다.
+  - eigenvalue가 0보다 작으면 vanish로, 1보다 크면 explode
+  - 가장 큰 eigenvector에 해당되지 않는 요소들은 사라진다.
+
+$$
+h^{(t)}=W^{T}h^{(t-1)} \\
+h^{(t)}=(W^{t})^{T}h^{(0)} \\
+h^{(t)}=Q^{T}(\Lambda^{t})Qh^{(0)} \\
+$$
+
+- 이런 특징은 RNN에서 특별한 경우이다.
+  - zero mean and variance v일때는 scaling을 통해 vanish를 줄일 수 있다
+-  RNN에서 gradient vanish를 지키기 힘들다,
+- 학습은 가능하나, 오랜 학습시간이 필요.
+
+
+
+## 10.8. Echo State Networks
+
+- h->h, x->h은 가장 학습하기 어려운 parameter이다.
