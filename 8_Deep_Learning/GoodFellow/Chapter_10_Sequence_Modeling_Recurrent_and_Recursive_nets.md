@@ -336,3 +336,42 @@ $$
 ## 10.8. Echo State Networks
 
 - h->h, x->h은 가장 학습하기 어려운 parameter이다.
+- 오직 output의 weight만 학습한다.
+- **Echo state networks** or **liquid state machines**(continuous hidden unit 대신에 spiking neuron을 사용) -> **reservoir computing**
+- hidden unit은 시간적 특징의 저수지를 이룬다. 
+  - 이는 kernel machine과 비슷하다. -> 이는 convex한 함수이다.
+- input과 recurrent weight에 state의 histories한 특징을 쌓을 수 있을 까?
+
+
+
+- 해결방법
+  - state->state function의 jacobian의 eigenvalue를 1근처로 만듬
+  - J의 spectral radius 중요 : eigenvalue의 절대값의 최대치
+
+
+
+- 예
+  - $ J^{n}(g+\sigma v)$ 이다. 이는 $\sigma|\lambda|^{n}$으로 나눠집니다.
+  - $\lambda > 1$일 때는 극도로 폭발, $\lambda < 1$때에는 극도로 작아진다
+  - nonlinear일 때에는 많은 시간이 흐린 뒤에 zero로 수렴, 실제로는 unity보다 훨씬 큰 spectral radius의 사용을 옹호한다.
+
+
+
+- forward의 경우에도 linear map $W^{T}$에 의해 h는 줄어든다. (contractive)이는 과거의 정보를 잊어버리게 만든다.
+
+
+
+- Jacobian matrix는 back-prop, feed forward 모두 얼마나 변화하는 지를 보여준다.
+  - 단 J, W는 symmetric해야 된다. 그래야 complec한 eigenvalue를 가지게 된다.
+- echo state network의 전략은 3과 같은 spectral radius를 가지기 위해 weight를 간단하게 고정시킨다.
+- 최근에는 완전히 훈련된 rnn의 weight로 초기화하는 방법이 있다. 
+  - long term dependencies에 좋다. 1.2로 초기화하는 것이 좋다.
+
+
+
+## 10.9. Leaky Units and Other Strategies for Multiple Time Scales
+
+
+
+
+
